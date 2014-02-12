@@ -5,7 +5,7 @@ Sometimes, you just need a good example to get started.  The [OWIN-WebAPI-Servic
 
 *Please be aware that OWIN (and this project template) are not compatible with .NET 4.0 and older projects.* 
 
-If you're starting from scratch, here are the steps I followed:
+## If starting from scratch:
 
 ### Create the service project ###
 If you're starting from scratch, add a new service project to your solution by selecting **'Windows Service'** in the new project template.
