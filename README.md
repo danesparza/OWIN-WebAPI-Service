@@ -56,6 +56,33 @@ Note that:
 * You can load API controllers from another assembly by using the hack `Type valuesControllerType = typeof(OWINTest.API.ValuesController);` or by creating a custom assembly resolver
 * You can use Attribute based routing by including the line `config.MapHttpAttributeRoutes()` before the default `config.Routes.MapHttpRoute`
 
+### Add API controllers
+Add API controllers to the service project by creating classes inherited from `ApiController`.  Here is a simple example that uses attribute based routing:
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    
+    namespace OWINTest.Service.API
+    {
+        [RoutePrefix("api/testing")]
+        public class RoutedController : ApiController
+        {
+            [Route("getall")]
+            public IEnumerable<string> GetAllItems()
+            {
+                return new string[] { "value1", "value2" };
+            }
+        }
+    }
+
+Note that:
+* Controllers in the service assembly will be loaded automatically.
+* If you want to load a controller in another assembly, you'll need to update your `Startup.cs` file (and read the note about loading controllers from other assemblies, above)
+
 ### Add code to start/stop the WebAPI listener
 
 Add code to the default service (inherited from `ServiceBase`) that the Visual Studio template created for you.  The finished service class should look something like this:
@@ -91,7 +118,12 @@ See how simple that is?
 * The service will be listening with a base location of `http://localhost:9000`.
 
 ### Install the service
-Install the service using the [.NET installutil.exe](http://msdn.microsoft.com/en-us/library/50614e95(v=vs.110).aspx).  See the sample batch files `install.cmd` and `uninstall.cmd` for an example of making this a little easier on yourself.
+Create a service installer by right-clicking on the service design surface and selecting 'Add installer' from the context menu.  You can update the service name, description, startup mode and default credentials by updating the properties on the 2 new controls that are added.
 
+After you've [added the service installer](http://msdn.microsoft.com/en-us/library/ddhy0byf(v=vs.110).aspx) by updating the service code, install the service using the [.NET installutil.exe](http://msdn.microsoft.com/en-us/library/50614e95(v=vs.110).aspx).  See the sample batch files `install.cmd` and `uninstall.cmd` for an example of making this a little easier on yourself.
 
+### Stuff to try
+Now that you've compiled and installed your service, start it up in the 'Services' app in the control panel.  
+* If you've added the `RoutedController` example above, try navigating to the following url in [Postman](http://www.getpostman.com/) or your favorite REST service tester: `http://localhost:9000/api/testing/getall` -- you should get a JSON string array back.  
+* Try hitting breakpoints in your running service in Visual Studio by selecting 'Debug/Attach to Process'.  Select your service exe, then press 'Attach'.  
 
