@@ -56,3 +56,42 @@ Note that:
 * You can load API controllers from another assembly by using the hack `Type valuesControllerType = typeof(OWINTest.API.ValuesController);` or by creating a custom assembly resolver
 * You can use Attribute based routing by including the line `config.MapHttpAttributeRoutes()` before the default `config.Routes.MapHttpRoute`
 
+### Add code to start/stop the WebAPI listener
+
+Add code to the default service (inherited from `ServiceBase`) that the Visual Studio template created for you.  The finished service class should look something like this:
+
+    public partial class APIServiceTest : ServiceBase
+    {
+        public string baseAddress = "http://localhost:9000/";
+        private IDisposable _server = null;
+        
+        public APIServiceTest()
+        {
+            InitializeComponent();
+        }
+    
+        protected override void OnStart(string[] args)
+        {
+            _server = WebApp.Start<Startup>(url: baseAddress);
+        }
+    
+        protected override void OnStop()
+        {
+            if(_server != null)
+            {
+                _server.Dispose();
+            }
+            base.OnStop();
+        }
+    }
+
+See how simple that is?  
+* In the `OnStart` handler, we start the listener and pass our `Startup` class we created.  That calls our configuration handler.
+* In the `OnStop` handler, we just stop the listener
+* The service will be listening with a base location of `http://localhost:9000`.
+
+### Install the service
+Install the service using the [.NET installutil.exe](http://msdn.microsoft.com/en-us/library/50614e95(v=vs.110).aspx).  See the sample batch files `install.cmd` and `uninstall.cmd` for an example of making this a little easier on yourself.
+
+
+
