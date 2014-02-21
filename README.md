@@ -11,7 +11,12 @@ Sometimes, you just need a good example to get started.  The [OWIN-WebAPI-Servic
 If you're starting from scratch, add a new service project to your solution by selecting **'Windows Service'** in the new project template.
 
 ### Add the OWIN Nuget packages ###
-Add the appropriate OWIN packages to your project by doing a search in the NuGet package manager for `OwinSelfHost`.  This will install the following dependent packages automatically:
+
+From the package manager console: 
+
+    Install-Package Microsoft.AspNet.WebApi.OwinSelfHost
+
+This will install the following dependent packages automatically:
 * Microsoft.AspNet.WebApi.Client
 * Microsoft.AspNet.WebApi.Core
 * Microsoft.AspNet.WebApi.Owin
