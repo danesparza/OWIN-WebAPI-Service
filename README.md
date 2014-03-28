@@ -138,5 +138,5 @@ After you've [added the service installer](http://msdn.microsoft.com/en-us/libra
 ### Stuff to try
 Now that you've compiled and installed your service, start it up in the 'Services' app in the control panel.  
 * If you've added the `RoutedController` example above, try navigating to the following url in [Postman](http://www.getpostman.com/) or your favorite REST service tester: `http://localhost:9000/api/testing/getall` -- you should get a JSON string array back.  
-* Try hitting breakpoints in your running service in Visual Studio by selecting 'Debug/Attach to Process'.  Select your service exe, then press 'Attach'.  
+* Try hitting breakpoints in your running service in Visual Studio by selecting 'Debug/Attach to Process'.  Select your running service exe, then press 'Attach'.  
 
