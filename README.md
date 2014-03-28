@@ -14,7 +14,9 @@ If you're starting from scratch, add a new service project to your solution by s
 
 From the package manager console: 
 
-    Install-Package Microsoft.AspNet.WebApi.OwinSelfHost
+```powershell
+Install-Package Microsoft.AspNet.WebApi.OwinSelfHost
+```
 
 This will install the following dependent packages automatically:
 * Microsoft.AspNet.WebApi.Client
@@ -30,32 +32,34 @@ This will install the following dependent packages automatically:
 ### Create an OWIN configuration handler
 Create the file `Startup.cs` and put a configuration handler in it:
 
-    class Startup
+```CSharp
+class Startup
+{
+    //  Hack from http://stackoverflow.com/a/17227764/19020 to load controllers in 
+    //  another assembly.  Another way to do this is to create a custom assembly resolver
+    Type valuesControllerType = typeof(OWINTest.API.ValuesController);
+
+    // This code configures Web API. The Startup class is specified as a type
+    // parameter in the WebApp.Start method.
+    public void Configuration(IAppBuilder appBuilder)
     {
-        //  Hack from http://stackoverflow.com/a/17227764/19020 to load controllers in 
-        //  another assembly.  Another way to do this is to create a custom assembly resolver
-        Type valuesControllerType = typeof(OWINTest.API.ValuesController);
-    
-        // This code configures Web API. The Startup class is specified as a type
-        // parameter in the WebApp.Start method.
-        public void Configuration(IAppBuilder appBuilder)
-        {
-            // Configure Web API for self-host. 
-            HttpConfiguration config = new HttpConfiguration();
-            
-            //  Enable attribute based routing
-            //  http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2
-            config.MapHttpAttributeRoutes();
-    
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-    
-            appBuilder.UseWebApi(config);
-        } 
-    }
+        // Configure Web API for self-host. 
+        HttpConfiguration config = new HttpConfiguration();
+        
+        //  Enable attribute based routing
+        //  http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2
+        config.MapHttpAttributeRoutes();
+
+        config.Routes.MapHttpRoute(
+            name: "DefaultApi",
+            routeTemplate: "api/{controller}/{id}",
+            defaults: new { id = RouteParameter.Optional }
+        );
+
+        appBuilder.UseWebApi(config);
+    } 
+}
+```
     
 Note that:
 * You can load API controllers from another assembly by using the hack `Type valuesControllerType = typeof(OWINTest.API.ValuesController);` or by creating a custom assembly resolver
@@ -64,25 +68,27 @@ Note that:
 ### Add API controllers
 Add API controllers to the service project by creating classes inherited from `ApiController`.  Here is a simple example that uses attribute based routing:
 
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Web.Http;
-    
-    namespace OWINTest.Service.API
+```CSharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Http;
+
+namespace OWINTest.Service.API
+{
+    [RoutePrefix("api/testing")]
+    public class RoutedController : ApiController
     {
-        [RoutePrefix("api/testing")]
-        public class RoutedController : ApiController
+        [Route("getall")]
+        public IEnumerable<string> GetAllItems()
         {
-            [Route("getall")]
-            public IEnumerable<string> GetAllItems()
-            {
-                return new string[] { "value1", "value2" };
-            }
+            return new string[] { "value1", "value2" };
         }
     }
+}
+```
 
 Note that:
 * Controllers in the service assembly will be loaded automatically.
@@ -92,30 +98,32 @@ Note that:
 
 Add code to the default service (inherited from `ServiceBase`) that the Visual Studio template created for you.  The finished service class should look something like this:
 
-    public partial class APIServiceTest : ServiceBase
+```CSharp
+public partial class APIServiceTest : ServiceBase
+{
+    public string baseAddress = "http://localhost:9000/";
+    private IDisposable _server = null;
+    
+    public APIServiceTest()
     {
-        public string baseAddress = "http://localhost:9000/";
-        private IDisposable _server = null;
-        
-        public APIServiceTest()
-        {
-            InitializeComponent();
-        }
-    
-        protected override void OnStart(string[] args)
-        {
-            _server = WebApp.Start<Startup>(url: baseAddress);
-        }
-    
-        protected override void OnStop()
-        {
-            if(_server != null)
-            {
-                _server.Dispose();
-            }
-            base.OnStop();
-        }
+        InitializeComponent();
     }
+
+    protected override void OnStart(string[] args)
+    {
+        _server = WebApp.Start<Startup>(url: baseAddress);
+    }
+
+    protected override void OnStop()
+    {
+        if(_server != null)
+        {
+            _server.Dispose();
+        }
+        base.OnStop();
+    }
+}
+```
 
 See how simple that is?  
 * In the `OnStart` handler, we start the listener and pass our `Startup` class we created.  That calls our configuration handler.
