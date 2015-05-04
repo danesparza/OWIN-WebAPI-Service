@@ -135,7 +135,7 @@ See how simple that is?
 * The service will be listening with a base location of `http://localhost:9000`.
 
 ### Install the service
-Create a service installer by right-clicking on the service design surface and selecting 'Add installer' from the context menu.  You can update the service name, description, startup mode and default credentials by updating the properties on the 2 new controls that are added.
+Create a service installer by right-clicking on the service design surface and selecting 'Add installer' from the context menu.  You can update the service name, description, [startup mode](http://superuser.com/a/285655/4508) and [default credentials](http://stackoverflow.com/a/510225/19020) by updating the properties on the 2 new controls that are added.  
 
 After you've [added the service installer](http://msdn.microsoft.com/en-us/library/ddhy0byf(v=vs.110).aspx) by updating the service code, install the service using the [.NET installutil.exe](http://msdn.microsoft.com/en-us/library/50614e95(v=vs.110).aspx).  See the sample batch files `install.cmd` and `uninstall.cmd` for an example of making this a little easier on yourself.
 
