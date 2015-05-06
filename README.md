@@ -144,3 +144,34 @@ Now that you've compiled and installed your service, start it up in the 'Service
 * If you've added the `RoutedController` example above, try navigating to the following url in [Postman](http://www.getpostman.com/) or your favorite REST service tester: `http://localhost:9000/api/testing/getall` -- you should get a JSON string array back.  
 * Try hitting breakpoints in your running service in Visual Studio by selecting 'Debug/Attach to Process'.  Select your running service exe, then press 'Attach'.  
 
+## Tips
+
+### Building the sample service
+
+So if you just want to take a look at the sample project, you'll need to either grab the zip or clone the project in git (which it sounds like you did).
+
+Before you build and install the service you'll need to do a 'Nuget package restore'. The easiest way to do this is probably to right-click on the solution in Visual Studio and select 'Manage Nuget packages for solution...'
+
+You should see the 'Manage NuGet Packages' screen pop up. At the very top of the screen, you'll probably see a yellow message indicating that 'Some NuGet packages are missing from this solution. Click to restore from your online package sources.' with a Restore button. Go ahead and click Restore and then close the window once the missing packages have been downloaded.
+
+Try your build again after that, and you should be good.
+
+### Installing the service
+
+You'll need to run the `installutil` command as an Administrator.  To do that, you'll need to [run the command prompt itself as Administrator](https://technet.microsoft.com/en-us/library/cc947813%28v=ws.10%29.aspx?f=255&MSPPError=-2147217396), or use [other interesting tricks](http://stackoverflow.com/a/12401075/19020)
+
+### Serving more than just localhost
+
+If you want to listen to all requests coming in a certain port -- not just localhost requests, you'll need to know a few things.  
+
+First, understand there are permission differences between Local System, Local service, Network service, and a user account.  I recommend you run under 'Local service' because it's a minimal set of permissions. 
+
+Second, you'll need to change the code that starts the service.  Instead of listening for requests to `http://localhost:9000`, you'll need to listen for requests to `http://+:9000`.  
+
+Third, you'll need to use the command-line tool `netsh` to authorize 'Local Service' to listen for requests.  I usually put this command in the **install.bat** file that installs the service: 
+
+```bash
+netsh http add urlacl url=http://+:9000/ user="Local Service"
+```
+
+Without this, you'll have problems starting the service and listening to all requests for that port.
