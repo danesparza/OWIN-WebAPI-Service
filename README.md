@@ -148,7 +148,7 @@ Now that you've compiled and installed your service, start it up in the 'Service
 
 ### Building the sample service
 
-So if you just want to take a look at the sample project, you'll need to either grab the zip or clone the project in git (which it sounds like you did).
+So if you just want to take a look at the sample project, you'll need to either grab the zip or [clone the project](https://help.github.com/articles/which-remote-url-should-i-use/) in git.
 
 Before you build and install the service you'll need to do a 'Nuget package restore'. The easiest way to do this is probably to right-click on the solution in Visual Studio and select 'Manage Nuget packages for solution...'
 
