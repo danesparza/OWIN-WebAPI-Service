@@ -165,11 +165,11 @@ You'll need to run the `installutil` command as an Administrator.  To do that, y
 
 If you want to listen to all requests coming in a certain port -- not just localhost requests, you'll need to know a few things.  
 
-First, understand there are permission differences between Local System, Local service, Network service, and a user account.  I recommend you run under 'Local service' because it's a minimal set of permissions. 
+**First**, understand [there are permission differences between Local System, Local service, Network service](http://stackoverflow.com/a/510225/19020), and a user account.  I recommend you run under 'Local service' because it's a minimal set of permissions. 
 
-Second, you'll need to change the code that starts the service.  Instead of listening for requests to `http://localhost:9000`, you'll need to listen for requests to `http://+:9000`.  
+**Second**, you'll need to change the code that starts the service.  Instead of listening for requests to `http://localhost:9000`, you'll need to listen for requests to `http://+:9000`.  
 
-Third, you'll need to use the command-line tool `netsh` to authorize 'Local Service' to listen for requests.  I usually put this command in the **install.bat** file that installs the service: 
+**Third**, you'll need to use the command-line tool `netsh` to authorize 'Local Service' to listen for requests.  I usually put this command in the **install.bat** file that installs the service: 
 
 ```bash
 netsh http add urlacl url=http://+:9000/ user="Local Service"
