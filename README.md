@@ -176,3 +176,9 @@ netsh http add urlacl url=http://+:9000/ user="Local Service"
 ```
 
 Without this, you'll have problems starting the service and listening to all requests for that port.
+
+### Help -- I'm getting Error 1053 when trying to start the service
+
+If you're getting `Error 1053: The service did not respond to the start or control request in a timely fashion.` there is a good chance you don't have the right version of the .NET framework installed.  Remember: OWIN and WebAPI 2 require .NET 4.5 or a more recent version of the framework to be installed.
+
+
