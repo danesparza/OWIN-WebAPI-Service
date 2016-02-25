@@ -1,4 +1,4 @@
-OWIN WebAPI Service example
+OWIN WebAPI Service example [![Build status](https://ci.appveyor.com/api/projects/status/qyo52t5ipvxqh5fb)](https://ci.appveyor.com/project/danesparza/owin-webapi-service)
 ===========================
 
 Sometimes, you just need a good example to get started.  
@@ -6,8 +6,6 @@ Sometimes, you just need a good example to get started.
 The [OWIN-WebAPI-Service project](https://github.com/danesparza/OWIN-WebAPI-Service) came out of a need to create a self-hosted WebAPI 2 service in a Windows service.  Microsoft says that going forward, [OWIN is the way to go](http://www.asp.net/web-api/overview/hosting-aspnet-web-api/self-host-a-web-api).  I wanted to use [attribute routing](http://www.asp.net/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2) in WebAPI 2.  I couldn't find a decent example anywhere, so I created my own. 
 
 *Please be aware that OWIN (and this project template) are only compatible with .NET 4.5 and newer projects.* 
-
-[![Build status](https://ci.appveyor.com/api/projects/status/qyo52t5ipvxqh5fb)](https://ci.appveyor.com/project/danesparza/owin-webapi-service)
 
 ## If starting from scratch:
 
