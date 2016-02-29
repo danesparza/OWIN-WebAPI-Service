@@ -1,4 +1,4 @@
-OWIN WebAPI Service example [![Build status](https://ci.appveyor.com/api/projects/status/qyo52t5ipvxqh5fb)](https://ci.appveyor.com/project/danesparza/owin-webapi-service)
+OWIN WebAPI Service example [![Build status](https://ci.appveyor.com/api/projects/status/qyo52t5ipvxqh5fb?svg=true)](https://ci.appveyor.com/project/danesparza/owin-webapi-service)
 ===========================
 
 Sometimes, you just need a good example to get started.  
