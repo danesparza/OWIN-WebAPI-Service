@@ -64,7 +64,7 @@ class Startup
 ```
     
 Note that:
-* You can load API controllers from another assembly by using the hack `Type valuesControllerType = typeof(OWINTest.API.ValuesController);` or by creating a custom assembly resolver
+* You can load API controllers from another assembly by using the hack `Type valuesControllerType = typeof(OWINTest.API.ValuesController);` or by creating a [custom assembly resolver](http://www.strathweb.com/2013/08/customizing-controller-discovery-in-asp-net-web-api/)
 * You can use Attribute based routing by including the line `config.MapHttpAttributeRoutes()` before the default `config.Routes.MapHttpRoute`
 
 ### Add API controllers
