@@ -1,4 +1,4 @@
-OWIN WebAPI Service example [![Build status](https://ci.appveyor.com/api/projects/status/qyo52t5ipvxqh5fb?svg=true)](https://ci.appveyor.com/project/danesparza/owin-webapi-service) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+OWIN WebAPI Service example [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ===========================
 
 Sometimes, you just need a good example to get started.  
